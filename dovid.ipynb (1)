@@ -1,0 +1,37 @@
+# Importing required modules
+!pip install requests beautifulsoup4
+!pip install youtube_dl
+import requests
+from bs4 import BeautifulSoup
+import youtube_dl
+from ipywidgets import widgets
+from IPython.display import display
+
+# Defining function to download video
+def download_video(video_url):
+    with youtube_dl.YoutubeDL() as ydl:
+        ydl.download([video_url])
+
+# Creating text box for user input
+url_box = widgets.Text(
+    value='',
+    placeholder='Enter video URL',
+    description='Video URL:',
+    disabled=False
+)
+
+# Creating download button
+download_button = widgets.Button(
+    description='Download'
+)
+
+# Defining function to handle button click
+def on_button_click(button):
+    download_video(url_box.value)
+
+# Attaching button click event to download button
+download_button.on_click(on_button_click)
+
+# Displaying UI
+display(url_box)
+display(download_button)
